@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>jsPsych AI 研究插件</title><link rel="stylesheet" href="../dist/style.css">
+<style>body{margin:0;background:#f1f4f4;padding:36px;font-family:system-ui,sans-serif;color:#243238}main{max-width:960px;margin:auto}h1{font-size:32px}a{color:#245b64}#examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}.card{background:white;padding:22px;border:1px solid #d8e1e3;border-radius:12px}.card h2{font-size:20px}.card a{display:inline-block;margin-right:14px}header{margin-bottom:28px;line-height:1.8}</style></head>
+<body><main><header><span class="ai-badge">jsPsych 7.3.4 · 插件 <span id="version"></span></span><h1>AI 研究插件</h1><p>六组研究能力共享模型连接、阶段控制与数据记录。示例默认使用模拟模型，可以直接查看输出数据。</p>
+<a href="research-index.html">六组研究示例</a> · <a href="builder.html">独立配置器</a> · <a href="voice.html">语音互动</a> · <a href="../README.md">使用文档</a></header><div id="examples"></div></main>
+<script src="../node_modules/jspsych/dist/index.browser.js"></script><script src="../dist/jspsych-ai.browser.js"></script><script>
+document.getElementById('version').textContent=JsPsychAI.PLUGIN_VERSION;
+for(const feature of JsPsychAI.FEATURE_DEFINITIONS){
+  const card=document.createElement('article');card.className='card';const title=document.createElement('h2');title.textContent=feature.title;
+  const description=document.createElement('p');description.textContent=feature.description;card.append(title,description);
+  for(const [suffix,label]of [['minimal','最小示例'],['research','研究示例']]){const link=document.createElement('a');link.href=feature.mode+'-'+suffix+'.html';link.textContent=label;card.append(link);}
+  document.getElementById('examples').append(card);
+}
+</script></body></html>

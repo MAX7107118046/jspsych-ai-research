@@ -1,0 +1,9 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>语音互动实测</title><link rel="stylesheet" href="../node_modules/jspsych/css/jspsych.css"><link rel="stylesheet" href="../dist/style.css"></head>
+<body><header style="padding:16px"><a href="research-index.html">研究示例</a><h1>语音互动实测</h1><p>点击“开启连续收音”，说完后等待转录，确认或修改文字。播报时继续说话可打断。使用耳机有助于避免扬声器声音再次录入。</p></header><main id="experiment"></main><pre id="result"></pre>
+<script src="../node_modules/jspsych/dist/index.browser.js"></script><script src="../dist/jspsych-ai.browser.js"></script><script>
+const api=JsPsychAI; const query=new URLSearchParams(location.search); const live=query.get('live')==='1';
+const client=api.createAIClient({transport:live?api.createProxyTransport():api.createMockTransport({respond:api.mockResearchResponse}),timeoutMs:300000});
+const speech=api.createSpeechClient(live?{}:{transport:api.createMockSpeechTransport()});
+const jsPsych=initJsPsych({display_element:'experiment',on_finish(){window.voiceData=jsPsych.data.get().values();document.getElementById('result').textContent=jsPsych.data.get().json(true);}});
+jsPsych.run([api.createAITrial('chat',{client,speech_client:speech,prompt:'讨论如何安排一次专注学习，每次回复50字以内。',research:{group:'multimodal',materials:[]},speech:{enabled:true,input_mode:'automatic',output:true,review_transcript:true,save_audio:false,language:'zh',voice_id:'male-qn-qingse'},max_turns:10})]);
+</script></body></html>

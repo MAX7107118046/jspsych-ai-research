@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI 研究配置器</title>
+  <link rel="stylesheet" href="../node_modules/jspsych/css/jspsych.css">
+  <link rel="stylesheet" href="../dist/style.css"><link rel="stylesheet" href="builder.css">
+</head>
+<body><main>
+  <p><a href="index.html">← 示例目录</a></p>
+  <h1>AI 研究配置器</h1>
+  <p>jsPsych 7.3.4 · 插件 <span id="plugin-version"></span>。配置可保存、导入和导出为标准实验代码。</p>
+  <div class="layout">
+    <section class="panel">
+      <label>研究方向<select id="research-group"><option value="">九类基础插件</option></select></label>
+      <label>底层插件<select id="mode"></select></label>
+      <label>任务说明<textarea id="prompt">请讨论你处理复杂任务的方式。</textarea></label>
+      <section id="research-fields" aria-label="研究任务参数"></section>
+      <section id="research-trial-fields" aria-label="角色和方案参数"></section>
+      <h2>语音服务</h2>
+      <label><input type="checkbox" id="speech-enabled">启用语音互动</label>
+      <section id="speech-fields" aria-label="语音参数"></section>
+      <h2>模型连接</h2>
+      <label>调用方式<select id="transport"><option value="mock">模拟模型</option><option value="proxy">服务端代理</option><option value="direct">浏览器直连</option></select></label>
+      <label>服务预设<select id="preset"></select></label>
+      <label>协议<select id="protocol"><option value="openai-chat">OpenAI-compatible Chat</option><option value="openai-responses">OpenAI Responses</option><option value="anthropic">Anthropic Messages</option><option value="gemini">Gemini</option></select></label>
+      <label>服务地址<input id="baseURL" placeholder="https://your-service/v1"></label>
+      <label>模型 ID<input id="model" placeholder="填写服务提供的模型 ID"></label>
+      <label>API Key<input id="apiKey" type="password" autocomplete="off"></label>
+      <label>思考模式<select id="thinking-mode"><option value="auto">模型适配默认值</option><option value="on">开启</option><option value="off">关闭</option></select></label>
+      <label>思考深度<select id="thinking-effort"><option value="">模型适配默认值</option><option value="low">low · 较短等待</option><option value="medium">medium</option><option value="high">high</option><option value="xhigh">xhigh</option><option value="max">max · 较长等待</option></select></label>
+      <label>生成 token 上限<input id="max-tokens" type="number" min="1" placeholder="按模型与思考深度设置"></label>
+      <p class="hint">思考与正文共享生成预算。正文长度可在任务说明或呈现参数中控制。</p>
+      <label>超时（毫秒）<input id="timeout-ms" type="number" min="1" placeholder="按模型与思考深度设置"></label>
+      <label>温度<input id="temperature" type="number" min="0" max="2" step="0.1" value="0.7"></label>
+      <details open><summary>实际调用设置</summary><pre id="effective-policy"></pre></details>
+      <p class="hint">服务端代理使用服务器固定的连接。下方显示直连配置；连接测试返回服务器实际设置。</p>
+      <h2>研究参数</h2>
+      <label>参与者轮数上限<input id="max-turns" type="number" min="1" value="3"></label>
+      <label>材料模式<select id="delivery"><option value="live">实时生成</option><option value="pregenerated">预生成材料</option><option value="replay">固定回放</option><option value="yoked">配对回放</option></select></label>
+      <label>回放材料 JSON<textarea id="materials">[{"text":"预设材料示例"}]</textarea></label>
+      <label>配对来源编号<input id="source-participant"></label>
+      <label>高级 trial 参数 JSON<textarea id="advanced">{}</textarea></label>
+      <div class="actions"><button id="probe">连接测试</button><button id="preview-run">运行预览</button><button id="save">保存配置</button><button id="load">读取配置</button></div>
+      <p id="message" role="status"></p>
+    </section>
+    <section class="panel">
+      <div class="actions"><button id="export-browser">导出 HTML</button><button id="export-esm">导出 ESM</button><button id="export-json">导出 JSON</button><label>导入 JSON<input type="file" id="import" accept="application/json,.json"></label></div>
+      <textarea id="code" aria-label="导出的代码" readonly></textarea>
+      <h2>实验预览</h2><div id="preview"></div><pre id="preview-data"></pre>
+    </section>
+  </div>
+</main>
+<script src="../node_modules/jspsych/dist/index.browser.js"></script><script src="../dist/jspsych-ai.browser.js"></script><script src="builder.js"></script>
+</body></html>

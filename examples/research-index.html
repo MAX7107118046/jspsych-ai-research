@@ -1,0 +1,9 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 研究能力示例</title><link rel="stylesheet" href="builder.css"></head>
+<body><main><h1>六组研究能力</h1><p>jsPsych 7.3.4 · 独立运行。默认使用模拟模型，真实调用在地址末尾添加 &amp;live=1，并启动已配置代理的本地服务器。</p><p><a href="builder.html">打开独立配置器</a> · <a href="index.html">九类基础插件示例</a></p><ul id="examples"></ul><p>语音完整示例需要点击收音按钮。模拟语音用于检查流程，真实转录与播报使用独立语音代理。</p></main>
+<script src="../node_modules/jspsych/dist/index.browser.js"></script><script src="../dist/jspsych-ai.browser.js"></script><script>
+for (const definition of JsPsychAI.RESEARCH_DEFINITIONS) {
+  const item = document.createElement('li'); const minimal = document.createElement('a'); const full = document.createElement('a');
+  minimal.href = `research.html?group=${definition.group}`; minimal.textContent = `${definition.title} · 最小示例`; full.href = `${minimal.href}&full=1`; full.textContent = '完整研究';
+  item.append(minimal, ' / ', full); document.getElementById('examples').append(item);
+}
+</script></body></html>
